@@ -373,20 +373,20 @@ code {
 <h2 id="1-the-journey-at-a-glance">1. The Journey at a Glance</h2>
 <p>This flowchart shows how all 7 phases connect. Each phase builds on the one before it, and some can run in parallel.</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
-    START([Current State\nLarge, tightly coupled codebase\nwith near-zero test coverage]) --> P0
+    START([Current State<br/>Large, tightly coupled codebase<br/>with near-zero test coverage]) --> P0
 
-    P0[Phase 0\nBuild the Safety Net]
-    P0 --> P1[Phase 1\nClean Up the Code]
-    P1 --> P2[Phase 2\nOrganize by Business Domain]
-    P2 --> P3[Phase 3\nDecouple the Domains]
-    P3 --> P5[Phase 5\nSpeed Things Up]
+    P0[Phase 0<br/>Build the Safety Net]
+    P0 --> P1[Phase 1<br/>Clean Up the Code]
+    P1 --> P2[Phase 2<br/>Organize by Business Domain]
+    P2 --> P3[Phase 3<br/>Decouple the Domains]
+    P3 --> P5[Phase 5<br/>Speed Things Up]
 
-    P0 --> P4[Phase 4\nMake the System Visible]
+    P0 --> P4[Phase 4<br/>Make the System Visible]
     P4 --> P5
-    P4 --> P6[Phase 6\nLock Down Security]
+    P4 --> P6[Phase 6<br/>Lock Down Security]
     P0 --> P6
 
-    P5 --> DONE([Target State\nClean, tested, observable,\nsecure, and fast])
+    P5 --> DONE([Target State<br/>Clean, tested, observable,<br/>secure, and fast])
     P6 --> DONE
 
     style START fill:#f87171,stroke:#dc2626,color:#fff
@@ -411,7 +411,7 @@ code {
 <h2 id="2-what-each-phase-delivers">2. What Each Phase Delivers</h2>
 <p>Each phase has a clear goal and a tangible outcome for the business.</p>
 <pre><code class="language-mermaid"><div class="mermaid">mindmap
-  root((Refactoring\nRoadmap))
+  root((Refactoring<br/>Roadmap))
     Phase 0: Safety Net
       Catch bugs before they reach users
       Automated checks on every code change
@@ -637,19 +637,19 @@ code {
 <p>Phase 0 is special — it creates the foundation that makes every other phase safe. Here's how the safety net works:</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart LR
     subgraph SAFETY["Phase 0: Safety Net"]
-        T1[Automated Tests\nfor Clinical Workflows]
-        T2[Automated Tests\nfor Billing & Payments]
-        T3[Automated Tests\nfor Chat & Messaging]
-        T4[Automated Tests\nfor User Management]
-        T5[CI Pipeline\nBlocks bad code\nfrom merging]
+        T1[Automated Tests<br/>for Clinical Workflows]
+        T2[Automated Tests<br/>for Billing & Payments]
+        T3[Automated Tests<br/>for Chat & Messaging]
+        T4[Automated Tests<br/>for User Management]
+        T5[CI Pipeline<br/>Blocks bad code<br/>from merging]
     end
 
-    SAFETY --> |"Protects"| P1[Phase 1:\nCode Cleanup]
-    SAFETY --> |"Protects"| P2[Phase 2:\nDomain Reorg]
-    SAFETY --> |"Protects"| P3[Phase 3:\nDecoupling]
-    SAFETY --> |"Protects"| P4[Phase 4:\nObservability]
-    SAFETY --> |"Protects"| P5[Phase 5:\nPerformance]
-    SAFETY --> |"Protects"| P6[Phase 6:\nSecurity]
+    SAFETY --> |"Protects"| P1[Phase 1:<br/>Code Cleanup]
+    SAFETY --> |"Protects"| P2[Phase 2:<br/>Domain Reorg]
+    SAFETY --> |"Protects"| P3[Phase 3:<br/>Decoupling]
+    SAFETY --> |"Protects"| P4[Phase 4:<br/>Observability]
+    SAFETY --> |"Protects"| P5[Phase 5:<br/>Performance]
+    SAFETY --> |"Protects"| P6[Phase 6:<br/>Security]
 
     style SAFETY fill:#fef3c7,stroke:#d97706
     style T1 fill:#fbbf24,stroke:#d97706,color:#000
@@ -669,16 +669,16 @@ code {
 <h2 id="5-dependency-map--what-must-happen-when">5. Dependency Map — What Must Happen When</h2>
 <p>Not all phases are strictly sequential. This diagram shows which phases block others and which can run in parallel.</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
-    P0["Phase 0\nSafety Net"]
+    P0["Phase 0<br/>Safety Net"]
 
-    P1["Phase 1\nCode Cleanup"]
-    P2["Phase 2\nDomain Organization"]
-    P3["Phase 3\nDecoupling"]
+    P1["Phase 1<br/>Code Cleanup"]
+    P2["Phase 2<br/>Domain Organization"]
+    P3["Phase 3<br/>Decoupling"]
 
-    P4["Phase 4\nVisibility"]
+    P4["Phase 4<br/>Visibility"]
 
-    P5["Phase 5\nPerformance"]
-    P6["Phase 6\nSecurity"]
+    P5["Phase 5<br/>Performance"]
+    P6["Phase 6<br/>Security"]
 
     P0 -->|must finish before| P1
     P1 -->|must finish before| P2
@@ -722,21 +722,21 @@ code {
   block:BEFORE:1
     columns 1
     A["BEFORE"]
-    B["Bug fixes are risky — no way\nto know if a fix breaks\nsomething else"]
-    C["Slow development — hard to\nfind and understand code\nin massive files"]
-    D["Billing and clinical code\ntangled together — changes\nin one break the other"]
-    E["Production issues take hours\nto diagnose with limited\nvisibility"]
-    F["Security gaps in\nauthentication and\ndata protection"]
+    B["Bug fixes are risky — no way<br/>to know if a fix breaks<br/>something else"]
+    C["Slow development — hard to<br/>find and understand code<br/>in massive files"]
+    D["Billing and clinical code<br/>tangled together — changes<br/>in one break the other"]
+    E["Production issues take hours<br/>to diagnose with limited<br/>visibility"]
+    F["Security gaps in<br/>authentication and<br/>data protection"]
   end
 
   block:AFTER:1
     columns 1
     G["AFTER"]
-    H["Automated tests catch\nproblems before they\nreach users"]
-    I["Clean, organized code —\ndevelopers move faster\nwith confidence"]
-    J["Independent domains —\nbilling changes can't\nbreak clinical features"]
-    K["Full system visibility —\ntrace any issue in minutes\nwith structured logging"]
-    L["Industry-standard security\nwith OWASP compliance\nand A-grade headers"]
+    H["Automated tests catch<br/>problems before they<br/>reach users"]
+    I["Clean, organized code —<br/>developers move faster<br/>with confidence"]
+    J["Independent domains —<br/>billing changes can't<br/>break clinical features"]
+    K["Full system visibility —<br/>trace any issue in minutes<br/>with structured logging"]
+    L["Industry-standard security<br/>with OWASP compliance<br/>and A-grade headers"]
   end
 
   style A fill:#f87171,stroke:#dc2626,color:#fff
