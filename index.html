@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Refactoring_Roadmap.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="pepcare-backend-refactoring-roadmap">Pepcare Backend Refactoring Roadmap</h1>
+<blockquote>
+<p>A visual, non-technical guide to the 7-phase journey from the current codebase to a clean, safe, and scalable backend.</p>
+</blockquote>
+<hr>
+<h2 id="1-the-journey-at-a-glance">1. The Journey at a Glance</h2>
+<p>This flowchart shows how all 7 phases connect. Each phase builds on the one before it, and some can run in parallel.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    START([Current State\nLarge, tightly coupled codebase\nwith near-zero test coverage]) --> P0
+
+    P0[Phase 0\nBuild the Safety Net]
+    P0 --> P1[Phase 1\nClean Up the Code]
+    P1 --> P2[Phase 2\nOrganize by Business Domain]
+    P2 --> P3[Phase 3\nDecouple the Domains]
+    P3 --> P5[Phase 5\nSpeed Things Up]
+
+    P0 --> P4[Phase 4\nMake the System Visible]
+    P4 --> P5
+    P4 --> P6[Phase 6\nLock Down Security]
+    P0 --> P6
+
+    P5 --> DONE([Target State\nClean, tested, observable,\nsecure, and fast])
+    P6 --> DONE
+
+    style START fill:#f87171,stroke:#dc2626,color:#fff
+    style P0 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#60a5fa,stroke:#2563eb,color:#fff
+    style P2 fill:#60a5fa,stroke:#2563eb,color:#fff
+    style P3 fill:#60a5fa,stroke:#2563eb,color:#fff
+    style P4 fill:#a78bfa,stroke:#7c3aed,color:#fff
+    style P5 fill:#34d399,stroke:#059669,color:#fff
+    style P6 fill:#f472b6,stroke:#db2777,color:#fff
+    style DONE fill:#22c55e,stroke:#16a34a,color:#fff
+</div></code></pre>
+<p><strong>Reading the arrows:</strong></p>
+<ul>
+<li><strong>Phase 0</strong> must finish first — it is the foundation for everything</li>
+<li><strong>Phases 1 → 2 → 3</strong> are sequential — each one reshapes the code further</li>
+<li><strong>Phase 4</strong> (visibility) can start as soon as Phase 0 is done, running alongside Phases 1–3</li>
+<li><strong>Phase 5</strong> (speed) needs both Phase 3 and Phase 4 complete</li>
+<li><strong>Phase 6</strong> (security) can start after Phase 0, benefits from Phase 4's logging</li>
+</ul>
+<hr>
+<h2 id="2-what-each-phase-delivers">2. What Each Phase Delivers</h2>
+<p>Each phase has a clear goal and a tangible outcome for the business.</p>
+<pre><code class="language-mermaid"><div class="mermaid">mindmap
+  root((Refactoring\nRoadmap))
+    Phase 0: Safety Net
+      Catch bugs before they reach users
+      Automated checks on every code change
+      Confidence to make changes safely
+    Phase 1: Code Cleanup
+      Easier for developers to read and understand
+      Faster to find and fix issues
+      Smaller, focused files instead of giant ones
+    Phase 2: Domain Organization
+      Code mirrors how the business works
+      Clear ownership — who is responsible for what
+      Changes in billing don't break clinical features
+    Phase 3: Decoupling
+      Domains can evolve independently
+      Add features without fear of side effects
+      Centralized notifications instead of scattered logic
+    Phase 4: Visibility
+      See what the system is doing in real time
+      Diagnose production issues in minutes, not hours
+      Every request is traceable end-to-end
+    Phase 5: Performance
+      Faster page loads for practitioners
+      Reduced server costs through efficiency
+      Data-driven decisions, not guesswork
+    Phase 6: Security
+      Protect patient data from threats
+      Industry-standard security compliance
+      Rate limiting prevents abuse
+</div></code></pre>
+<hr>
+<h2 id="3-phase-by-phase-summary">3. Phase-by-Phase Summary</h2>
+<h3 id="phase-0--build-the-safety-net">Phase 0 — Build the Safety Net</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Make it safe to change anything without breaking the product</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We add automated tests that verify the system works correctly — covering patient referrals, billing, chat, and all critical workflows</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>Every future phase can proceed with confidence, because tests catch mistakes immediately</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>Prevents costly bugs from reaching users during the refactoring process</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-1--clean-up-the-code">Phase 1 — Clean Up the Code</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Make the existing code easier to work with</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We break up 6 massive files (some over 15,000 lines) into smaller, focused files. We remove dead code and improve naming</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>Developers can find, understand, and modify code faster</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>Reduced development time for bug fixes and new features</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-2--organize-by-business-domain">Phase 2 — Organize by Business Domain</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Structure the code to match how the business actually works</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We reorganize code into clear areas: Clinical (referrals, evaluations), Users, Chat, Billing, Notifications, and Shared Tools</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>Teams can work on their domain without stepping on each other's toes</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>Faster feature delivery with fewer cross-team blockers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-3--decouple-the-domains">Phase 3 — Decouple the Domains</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Make each business area independent so changes don't cascade</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We replace direct connections between domains with an event-based system. Instead of billing code reaching into user code, it sends a message that user code listens for</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>Each domain can be updated, tested, and deployed with minimal risk to others</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>New features in one area no longer risk breaking another</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-4--make-the-system-visible">Phase 4 — Make the System Visible</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Know what the system is doing at all times</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We add structured logging, request tracking, and monitoring for all 18 background jobs</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>When something goes wrong, we can trace the exact path and fix it quickly</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>Faster incident resolution — minutes instead of hours</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-5--speed-things-up">Phase 5 — Speed Things Up</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Make the platform faster based on real usage data</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We measure actual performance bottlenecks and fix them — optimizing database queries, adding caching for frequently accessed data</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>A measurably faster experience for all users</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>Better user experience, lower infrastructure costs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-6--lock-down-security">Phase 6 — Lock Down Security</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Bring security up to industry standards</td>
+</tr>
+<tr>
+<td><strong>What happens</strong></td>
+<td>We fix authentication, add rate limiting, harden configurations, and ensure all data queries are safe from injection attacks</td>
+</tr>
+<tr>
+<td><strong>What it unlocks</strong></td>
+<td>Compliance with OWASP Top 10 security standards, A-grade security headers</td>
+</tr>
+<tr>
+<td><strong>Business value</strong></td>
+<td>Protects patient data, reduces liability, builds trust with healthcare providers</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-the-safety-net-protects-everything">4. The Safety Net Protects Everything</h2>
+<p>Phase 0 is special — it creates the foundation that makes every other phase safe. Here's how the safety net works:</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph SAFETY["Phase 0: Safety Net"]
+        T1[Automated Tests\nfor Clinical Workflows]
+        T2[Automated Tests\nfor Billing & Payments]
+        T3[Automated Tests\nfor Chat & Messaging]
+        T4[Automated Tests\nfor User Management]
+        T5[CI Pipeline\nBlocks bad code\nfrom merging]
+    end
+
+    SAFETY --> |"Protects"| P1[Phase 1:\nCode Cleanup]
+    SAFETY --> |"Protects"| P2[Phase 2:\nDomain Reorg]
+    SAFETY --> |"Protects"| P3[Phase 3:\nDecoupling]
+    SAFETY --> |"Protects"| P4[Phase 4:\nObservability]
+    SAFETY --> |"Protects"| P5[Phase 5:\nPerformance]
+    SAFETY --> |"Protects"| P6[Phase 6:\nSecurity]
+
+    style SAFETY fill:#fef3c7,stroke:#d97706
+    style T1 fill:#fbbf24,stroke:#d97706,color:#000
+    style T2 fill:#fbbf24,stroke:#d97706,color:#000
+    style T3 fill:#fbbf24,stroke:#d97706,color:#000
+    style T4 fill:#fbbf24,stroke:#d97706,color:#000
+    style T5 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#60a5fa,stroke:#2563eb,color:#fff
+    style P2 fill:#60a5fa,stroke:#2563eb,color:#fff
+    style P3 fill:#60a5fa,stroke:#2563eb,color:#fff
+    style P4 fill:#a78bfa,stroke:#7c3aed,color:#fff
+    style P5 fill:#34d399,stroke:#059669,color:#fff
+    style P6 fill:#f472b6,stroke:#db2777,color:#fff
+</div></code></pre>
+<p><strong>Key message:</strong> Without the safety net, every change is a risk. With it, we catch problems before they reach users.</p>
+<hr>
+<h2 id="5-dependency-map--what-must-happen-when">5. Dependency Map — What Must Happen When</h2>
+<p>Not all phases are strictly sequential. This diagram shows which phases block others and which can run in parallel.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    P0["Phase 0\nSafety Net"]
+
+    P1["Phase 1\nCode Cleanup"]
+    P2["Phase 2\nDomain Organization"]
+    P3["Phase 3\nDecoupling"]
+
+    P4["Phase 4\nVisibility"]
+
+    P5["Phase 5\nPerformance"]
+    P6["Phase 6\nSecurity"]
+
+    P0 -->|must finish before| P1
+    P1 -->|must finish before| P2
+    P2 -->|must finish before| P3
+
+    P0 -->|must finish before| P4
+    P0 -->|must finish before| P6
+
+    P3 -->|must finish before| P5
+    P4 -->|must finish before| P5
+    P4 -.->|benefits| P6
+
+    subgraph SEQUENTIAL["Sequential Track (Code Structure)"]
+        P1
+        P2
+        P3
+    end
+
+    subgraph PARALLEL["Parallel Track (Operations)"]
+        P4
+    end
+
+    style P0 fill:#fbbf24,stroke:#d97706,color:#000
+    style SEQUENTIAL fill:#eff6ff,stroke:#2563eb
+    style PARALLEL fill:#f5f3ff,stroke:#7c3aed
+    style P5 fill:#34d399,stroke:#059669,color:#fff
+    style P6 fill:#f472b6,stroke:#db2777,color:#fff
+</div></code></pre>
+<p><strong>Two parallel tracks after Phase 0:</strong></p>
+<ol>
+<li><strong>Code Structure Track</strong> (Phases 1 → 2 → 3): Reshaping the code, step by step</li>
+<li><strong>Operations Track</strong> (Phase 4): Adding visibility and monitoring</li>
+</ol>
+<p>Both tracks converge at Phase 5 (performance), which needs clean code <em>and</em> measurement tools. Phase 6 (security) can start early and benefits from Phase 4's logging.</p>
+<hr>
+<h2 id="6-before-vs-after">6. Before vs. After</h2>
+<h3 id="what-changes-for-the-business">What Changes for the Business</h3>
+<pre><code class="language-mermaid"><div class="mermaid">block-beta
+  columns 2
+
+  block:BEFORE:1
+    columns 1
+    A["BEFORE"]
+    B["Bug fixes are risky — no way\nto know if a fix breaks\nsomething else"]
+    C["Slow development — hard to\nfind and understand code\nin massive files"]
+    D["Billing and clinical code\ntangled together — changes\nin one break the other"]
+    E["Production issues take hours\nto diagnose with limited\nvisibility"]
+    F["Security gaps in\nauthentication and\ndata protection"]
+  end
+
+  block:AFTER:1
+    columns 1
+    G["AFTER"]
+    H["Automated tests catch\nproblems before they\nreach users"]
+    I["Clean, organized code —\ndevelopers move faster\nwith confidence"]
+    J["Independent domains —\nbilling changes can't\nbreak clinical features"]
+    K["Full system visibility —\ntrace any issue in minutes\nwith structured logging"]
+    L["Industry-standard security\nwith OWASP compliance\nand A-grade headers"]
+  end
+
+  style A fill:#f87171,stroke:#dc2626,color:#fff
+  style B fill:#fecaca,stroke:#dc2626
+  style C fill:#fecaca,stroke:#dc2626
+  style D fill:#fecaca,stroke:#dc2626
+  style E fill:#fecaca,stroke:#dc2626
+  style F fill:#fecaca,stroke:#dc2626
+  style G fill:#22c55e,stroke:#16a34a,color:#fff
+  style H fill:#bbf7d0,stroke:#16a34a
+  style I fill:#bbf7d0,stroke:#16a34a
+  style J fill:#bbf7d0,stroke:#16a34a
+  style K fill:#bbf7d0,stroke:#16a34a
+  style L fill:#bbf7d0,stroke:#16a34a
+</div></code></pre>
+<h3 id="key-success-indicators">Key Success Indicators</h3>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Now</th>
+<th>After Refactoring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confidence to ship changes safely</td>
+<td>Low — near-zero test coverage</td>
+<td>High — automated tests on every change</td>
+</tr>
+<tr>
+<td>Time to understand code</td>
+<td>Slow — files with 15,000+ lines</td>
+<td>Fast — small, focused, well-named files</td>
+</tr>
+<tr>
+<td>Risk of one change breaking another area</td>
+<td>High — 4 tangled dependency cycles</td>
+<td>Low — independent domains with clear boundaries</td>
+</tr>
+<tr>
+<td>Time to diagnose production issues</td>
+<td>Hours — limited logging</td>
+<td>Minutes — structured, traceable logs</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>Multiple known vulnerabilities</td>
+<td>Industry-standard compliance (OWASP Top 10)</td>
+</tr>
+<tr>
+<td>Platform speed</td>
+<td>Unknown — no measurements</td>
+<td>Measured and optimized with data</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7-glossary">7. Glossary</h2>
+<p>Terms used in this roadmap, explained in plain language:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What It Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Safety net</strong></td>
+<td>Automated tests that verify the system works correctly — if something breaks, we know immediately</td>
+</tr>
+<tr>
+<td><strong>God file</strong></td>
+<td>A single file that has grown too large and does too many things, making it hard to work with</td>
+</tr>
+<tr>
+<td><strong>Domain</strong></td>
+<td>A distinct area of the business (e.g., Clinical, Billing, Chat, Users)</td>
+</tr>
+<tr>
+<td><strong>Decoupling</strong></td>
+<td>Making sure one part of the system doesn't directly depend on another, so changes stay contained</td>
+</tr>
+<tr>
+<td><strong>Domain events</strong></td>
+<td>A messaging pattern where one area announces &quot;something happened&quot; and other areas react — instead of directly calling each other</td>
+</tr>
+<tr>
+<td><strong>Observability</strong></td>
+<td>The ability to understand what the system is doing from the outside, through logs, traces, and metrics</td>
+</tr>
+<tr>
+<td><strong>OWASP Top 10</strong></td>
+<td>The industry-standard list of the 10 most critical web application security risks</td>
+</tr>
+<tr>
+<td><strong>CI pipeline</strong></td>
+<td>An automated process that checks code quality and runs tests every time someone proposes a change</td>
+</tr>
+<tr>
+<td><strong>Contract tests</strong></td>
+<td>Tests that verify the system's external behavior (what users and other systems see) hasn't changed</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>This roadmap is a companion to the detailed technical documents in this folder. For implementation specifics, see <a href="./PRD.md">PRD.md</a>, <a href="./Phase0_TestCoverage.md">Phase0_TestCoverage.md</a>, and <a href="./RFC-001-TestCoverage.md">RFC-001-TestCoverage.md</a>.</em></p>
+
+</body>
+</html>
